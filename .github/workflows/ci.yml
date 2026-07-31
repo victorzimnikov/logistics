@@ -1,4 +1,5 @@
 name: check
+
 on:
   push:
     branches: [main]
@@ -8,21 +9,30 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Setup NodeJS
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
-          cache: 'pnpm'
-      - name: Install pnpm
-        run: npm install -g pnpm
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install pnpm and verify
+        run: |
+          npm install -g pnpm
+          pnpm --version
+
       - name: Install dependencies
         run: pnpm install
+
       - name: Run lint
         run: pnpm lint
+
       - name: Run typecheck
         run: pnpm dts
+
       - name: Run test
         run: pnpm test
