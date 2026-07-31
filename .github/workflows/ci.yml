@@ -16,7 +16,7 @@ jobs:
         with:
           node_version: "20"
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install
       - name: Run lint
         run: pnpm lint
       - name: Run typecheck
