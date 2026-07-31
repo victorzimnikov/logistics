@@ -16,10 +16,10 @@ jobs:
         with:
           node_version: "20"
       - name: Install dependencies
-        uses: pnpm ci
+        run: pnpm ci
       - name: Run lint
-        uses: pnpm lint
+        run: pnpm lint
       - name: Run typecheck
-        uses: pnpm dts
+        run: pnpm dts
       - name: Run test
-        uses: pnpm test
+        run: pnpm test
