@@ -42,8 +42,6 @@ import { BetsPanel } from "@/widgets/bets-panel/BetsPanel";
 
 const routeApi = getRouteApi("/auctions/$auctionUuid");
 
-
-
 const DetailSection = ({
   icon,
   title,
@@ -297,7 +295,8 @@ export const AuctionDetailPage = () => {
               До конца: <b>{formatTimeLeft(auction.trading.ends_at)}</b>
             </Typography>
           </Stack>
-          <Typography variant="caption"
+          <Typography
+            variant="caption"
             color={
               ["Leading", "Winner"].includes(auction.trading.user_status)
                 ? "success.main"
@@ -361,15 +360,14 @@ export const AuctionDetailPage = () => {
                     )}
                   </Stack>
                   <Box sx={{ pb: index < auction.points.length - 1 ? 2.5 : 0 }}>
-                    <Typography variant="overline"
-                      color="text.secondary"
-                    >
+                    <Typography variant="overline" color="text.secondary">
                       {point.type === "LOADING" ? "ПОГРУЗКА" : "ВЫГРУЗКА"}
                     </Typography>
                     <Typography sx={{ fontWeight: 800, mt: 0.3 }}>
                       {point.city.name}
                     </Typography>
-                    <Typography variant="body2"
+                    <Typography
+                      variant="body2"
                       color="text.secondary"
                       sx={{ mt: 0.3 }}
                     >
@@ -379,7 +377,8 @@ export const AuctionDetailPage = () => {
                       {formatFullDate(point.date_from)}
                     </Typography>
                     {!hiddenContacts && point.contact_name && (
-                      <Typography variant="caption"
+                      <Typography
+                        variant="caption"
                         color="text.secondary"
                         sx={{ mt: 0.3 }}
                       >
@@ -520,7 +519,11 @@ export const AuctionDetailPage = () => {
             <Typography sx={{ fontWeight: 800 }}>
               {auction.organizer.name}
             </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ mt: 0.5 }}
+            >
               ИНН {auction.organizer.inn}
             </Typography>
             <Stack direction="row" spacing={1} sx={{ mt: 1.5 }}>

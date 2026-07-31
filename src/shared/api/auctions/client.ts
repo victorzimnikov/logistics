@@ -81,10 +81,7 @@ const auctionPath = (auctionUuid: string): string =>
   `/auctions/${encodeURIComponent(auctionUuid)}`;
 
 export const auctionsApi = {
-  getList: async (
-    body: AuctionListRequestDto = {},
-    signal?: AbortSignal,
-  ) => {
+  getList: async (body: AuctionListRequestDto = {}, signal?: AbortSignal) => {
     const payload = await request("/auctions/list", {
       method: "POST",
       body: JSON.stringify(body),
@@ -98,16 +95,11 @@ export const auctionsApi = {
     return mapAuctionDetailResponse(payload);
   },
 
-  getBets: async (
-    auctionUuid: string,
-    all = false,
-    signal?: AbortSignal,
-  ) => {
+  getBets: async (auctionUuid: string, all = false, signal?: AbortSignal) => {
     const suffix = all ? "?all=true" : "";
-    const payload = await request(
-      `${auctionPath(auctionUuid)}/bets${suffix}`,
-      { signal },
-    );
+    const payload = await request(`${auctionPath(auctionUuid)}/bets${suffix}`, {
+      signal,
+    });
     return mapBetListResponse(payload, auctionUuid);
   },
 

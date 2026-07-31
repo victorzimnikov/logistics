@@ -44,9 +44,9 @@ describe("getAuctionList", () => {
   it("фильтрует по контрактному enum типа аукциона", () => {
     const response = list({ auc_type: ["Down"] });
     expect(response.data?.length).toBeGreaterThan(0);
-    expect(
-      response.data?.every((item) => item.main?.auc_type === "Down"),
-    ).toBe(true);
+    expect(response.data?.every((item) => item.main?.auc_type === "Down")).toBe(
+      true,
+    );
   });
 
   it("фильтрует по названию города погрузки", () => {
@@ -134,10 +134,9 @@ describe("createAuctionBet", () => {
   });
 
   it("отвечает ProblemDetail 404 для неизвестного UUID", () => {
-    const result = createAuctionBet(
-      "00000000-0000-4000-8000-000000000099",
-      { price: 100_000 },
-    );
+    const result = createAuctionBet("00000000-0000-4000-8000-000000000099", {
+      price: 100_000,
+    });
     expect(result.ok).toBe(false);
     if (!result.ok) {
       expect(result.status).toBe(404);
@@ -163,6 +162,8 @@ describe("createAuctionBet", () => {
   it("resetMockStore откатывает mutation", () => {
     createAuctionBet(MOCK_AUCTION_UUIDS.second, { price: 130_000 });
     resetMockStore();
-    expect(getAuction(MOCK_AUCTION_UUIDS.second)?.trading.your?.bet).toBe(false);
+    expect(getAuction(MOCK_AUCTION_UUIDS.second)?.trading.your?.bet).toBe(
+      false,
+    );
   });
 });

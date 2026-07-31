@@ -309,11 +309,7 @@ const toBetItem = (bet: Bet, index: number): BetItemDto => ({
   },
 });
 
-const isWithinDates = (
-  value: string,
-  from?: string,
-  to?: string,
-): boolean => {
+const isWithinDates = (value: string, from?: string, to?: string): boolean => {
   const timestamp = Date.parse(value);
   if (from && timestamp < Date.parse(from)) return false;
   if (to && timestamp > Date.parse(to)) return false;
@@ -501,9 +497,7 @@ const matchesListRequest = (
   ) {
     return false;
   }
-  if (
-    request.is_international_shipment === true
-  ) {
+  if (request.is_international_shipment === true) {
     return false;
   }
   if (
@@ -513,10 +507,7 @@ const matchesListRequest = (
   ) {
     return false;
   }
-  if (
-    request.customer_ids?.length &&
-    !request.customer_ids.includes(340)
-  ) {
+  if (request.customer_ids?.length && !request.customer_ids.includes(340)) {
     return false;
   }
   if (request.contractor) return false;
@@ -541,8 +532,7 @@ const sortAuctions = (
     return result.sort((left, right) => {
       const direction = request.is_oldest ? 1 : -1;
       return (
-        direction *
-        (Date.parse(left.created_at) - Date.parse(right.created_at))
+        direction * (Date.parse(left.created_at) - Date.parse(right.created_at))
       );
     });
   }
@@ -554,15 +544,16 @@ const sortAuctions = (
         field === "start_time"
           ? Date.parse(left.created_at)
           : field === "price_per_km"
-            ? left.price.price_per_km ?? 0
-            : left.price.current_price ?? 0;
+            ? (left.price.price_per_km ?? 0)
+            : (left.price.current_price ?? 0);
       const rightValue =
         field === "start_time"
           ? Date.parse(right.created_at)
           : field === "price_per_km"
-            ? right.price.price_per_km ?? 0
-            : right.price.current_price ?? 0;
-      if (leftValue !== rightValue) return multiplier * (leftValue - rightValue);
+            ? (right.price.price_per_km ?? 0)
+            : (right.price.current_price ?? 0);
+      if (leftValue !== rightValue)
+        return multiplier * (leftValue - rightValue);
     }
     return 0;
   });
@@ -635,9 +626,7 @@ const notFoundError = (): ApiProblemDto => ({
 export const createAuctionBet = (
   auctionUuid: string,
   request: SetBetRequestDto,
-):
-  | { ok: true }
-  | { ok: false; status: number; error: ApiProblemDto } => {
+): { ok: true } | { ok: false; status: number; error: ApiProblemDto } => {
   const auction = auctions.find((item) => item.auction_uuid === auctionUuid);
   if (!auction) {
     return { ok: false, status: 404, error: notFoundError() };

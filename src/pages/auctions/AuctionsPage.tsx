@@ -243,7 +243,8 @@ export const AuctionsPage = () => {
                   : "Загружаем аукционы…"}
               </Typography>
               {query.isFetching && !query.isPending && (
-                <Typography variant="caption"
+                <Typography
+                  variant="caption"
                   color="primary"
                   sx={{ fontWeight: 700 }}
                 >

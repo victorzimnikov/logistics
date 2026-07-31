@@ -81,10 +81,7 @@ describe("auctionsApi", () => {
       jsonResponse(getAuctionBets(MOCK_AUCTION_UUIDS.first, true)),
     );
 
-    const result = await auctionsApi.getBets(
-      MOCK_AUCTION_UUIDS.first,
-      true,
-    );
+    const result = await auctionsApi.getBets(MOCK_AUCTION_UUIDS.first, true);
 
     expect(fetchMock).toHaveBeenCalledWith(
       `/api/v1/auctions/${MOCK_AUCTION_UUIDS.first}/bets?all=true`,

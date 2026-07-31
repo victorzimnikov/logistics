@@ -1,9 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import {
-  formatMoney,
-  formatTimeLeft,
-  formatWeight,
-} from "@/shared/lib/format";
+import { formatMoney, formatTimeLeft, formatWeight } from "@/shared/lib/format";
 
 // Intl вставляет неразрывные пробелы — для сравнения приводим к обычным.
 const normalize = (value: string) => value.replace(/[\u00a0\u202f]/g, " ");

@@ -28,7 +28,8 @@ const requireRecord = (
   value: unknown,
   path: string,
 ): Record<string, unknown> => {
-  if (!isRecord(value)) throw new ApiContractError(`${path} должен быть объектом`);
+  if (!isRecord(value))
+    throw new ApiContractError(`${path} должен быть объектом`);
   return value;
 };
 
@@ -40,7 +41,8 @@ const requireString = (value: unknown, path: string): string => {
 };
 
 const requireArray = (value: unknown, path: string): unknown[] => {
-  if (!Array.isArray(value)) throw new ApiContractError(`${path} должен быть массивом`);
+  if (!Array.isArray(value))
+    throw new ApiContractError(`${path} должен быть массивом`);
   return value;
 };
 
@@ -79,13 +81,22 @@ const temperatureLabel = (
 };
 
 const mapAuctionListItem = (dto: AuctionListItemApiDto): AuctionListItem => {
-  const main = requireRecord(dto.main, "data[].main") as AuctionListItemApiDto["main"];
+  const main = requireRecord(
+    dto.main,
+    "data[].main",
+  ) as AuctionListItemApiDto["main"];
   const trading = requireRecord(
     dto.trading,
     "data[].trading",
   ) as AuctionListItemApiDto["trading"];
-  const route = requireRecord(dto.route, "data[].route") as AuctionListItemApiDto["route"];
-  const cargo = requireRecord(dto.cargo, "data[].cargo") as AuctionListItemApiDto["cargo"];
+  const route = requireRecord(
+    dto.route,
+    "data[].route",
+  ) as AuctionListItemApiDto["route"];
+  const cargo = requireRecord(
+    dto.cargo,
+    "data[].cargo",
+  ) as AuctionListItemApiDto["cargo"];
   const auctionUuid = requireString(main?.order_uid, "data[].main.order_uid");
   const price = trading?.price ?? null;
   const loading = mapListRoutePoint(route?.load, "LOADING", auctionUuid);
@@ -182,7 +193,9 @@ const mapDetailRoutePoint = (
     contact_name: dto.contact?.name || null,
     contact_phone: dto.contact?.phone || null,
     date_from: requireString(dto.start_date, `routes[${index}].start_date`),
-    date_to: dto.end_date ?? requireString(dto.start_date, `routes[${index}].start_date`),
+    date_to:
+      dto.end_date ??
+      requireString(dto.start_date, `routes[${index}].start_date`),
   };
 };
 
@@ -200,13 +213,22 @@ const loadingTypeLabel = (
 };
 
 export const mapAuctionDetailResponse = (input: unknown): AuctionDetail => {
-  const root = requireRecord(input, "корень") as unknown as AuctionShowResponseDto;
-  const main = requireRecord(root.main, "main") as AuctionShowResponseDto["main"];
+  const root = requireRecord(
+    input,
+    "корень",
+  ) as unknown as AuctionShowResponseDto;
+  const main = requireRecord(
+    root.main,
+    "main",
+  ) as AuctionShowResponseDto["main"];
   const organizer = requireRecord(
     root.organizer,
     "organizer",
   ) as AuctionShowResponseDto["organizer"];
-  const cargo = requireRecord(root.cargo, "cargo") as AuctionShowResponseDto["cargo"];
+  const cargo = requireRecord(
+    root.cargo,
+    "cargo",
+  ) as AuctionShowResponseDto["cargo"];
   const trading = requireRecord(
     root.trading,
     "trading",
@@ -223,13 +245,14 @@ export const mapAuctionDetailResponse = (input: unknown): AuctionDetail => {
   const points = routes.map((point, index) =>
     mapDetailRoutePoint(point, auctionUuid, index),
   );
-  const loading =
-    points.find((point) => point.type === "LOADING") ?? points[0];
+  const loading = points.find((point) => point.type === "LOADING") ?? points[0];
   const unloading =
     points.find((point) => point.type === "UNLOADING") ?? points.at(-1);
 
   if (!loading || !unloading) {
-    throw new ApiContractError("routes должен содержать точки погрузки и выгрузки");
+    throw new ApiContractError(
+      "routes должен содержать точки погрузки и выгрузки",
+    );
   }
 
   const sourceCargo =
@@ -260,8 +283,7 @@ export const mapAuctionDetailResponse = (input: unknown): AuctionDetail => {
       body_type: cargo.body_type ?? "Не указан",
       packages_count: sourceCargo?.package_amount ?? null,
       temperature: temperatureLabel(cargo.temp_from, cargo.temp_to),
-      comment:
-        routes.find((point) => Boolean(point.comment))?.comment ?? null,
+      comment: routes.find((point) => Boolean(point.comment))?.comment ?? null,
     },
     price: {
       currency: "RUB",
@@ -313,10 +335,8 @@ const mapBet = (dto: BetItemDto, auctionUuid: string): Bet => {
   return {
     bet_uuid: String(dto.id ?? `${auctionUuid}-${dto.created_at ?? "bet"}`),
     auction_uuid: auctionUuid,
-    price_with_vat:
-      dto.price_with_vat ?? dto.price_info?.price_with_vat ?? 0,
-    price_without_vat:
-      dto.price_no_vat ?? dto.price_info?.price_no_vat ?? 0,
+    price_with_vat: dto.price_with_vat ?? dto.price_info?.price_with_vat ?? 0,
+    price_without_vat: dto.price_no_vat ?? dto.price_info?.price_no_vat ?? 0,
     carrier: {
       name: dto.organization_name ?? "",
       inn: dto.organization_inn ?? "",

@@ -17,10 +17,7 @@ const mockDelay = async (duration: number): Promise<void> => {
   if (import.meta.env.MODE !== "test") await delay(duration);
 };
 
-const problemJson = (
-  body: Record<string, unknown>,
-  status: number,
-) =>
+const problemJson = (body: Record<string, unknown>, status: number) =>
   HttpResponse.json(body, {
     status,
     headers: { "Content-Type": "application/problem+json" },

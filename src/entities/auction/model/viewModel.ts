@@ -10,9 +10,6 @@ import {
   formatWeight,
 } from "@/shared/lib/format";
 
-
-
-
 export type AuctionAction = "makeBet" | "changeBet" | "viewBets" | "disabled";
 
 export type AuctionCardViewModel = {
@@ -36,9 +33,7 @@ export type AuctionCardViewModel = {
   action: AuctionAction;
 };
 
-export const getAuctionAction = (
-  auction: AuctionListItem,
-): AuctionAction => {
+export const getAuctionAction = (auction: AuctionListItem): AuctionAction => {
   if (auction.trading.can_set_bet) {
     return auction.trading.has_my_bet ? "changeBet" : "makeBet";
   }

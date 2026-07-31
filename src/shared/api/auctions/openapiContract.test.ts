@@ -30,10 +30,7 @@ type OpenApiDocument = {
 };
 
 const openApi = JSON.parse(
-  readFileSync(
-    resolve(process.cwd(), "docs/openapi.auctions.v0.json"),
-    "utf8",
-  ),
+  readFileSync(resolve(process.cwd(), "docs/openapi.auctions.v0.json"), "utf8"),
 ) as OpenApiDocument;
 
 describe("openapi.auctions.v0.json", () => {

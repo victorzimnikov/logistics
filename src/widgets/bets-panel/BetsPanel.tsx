@@ -61,7 +61,11 @@ const MobileBetCard = ({ bet }: { bet: Bet }) => {
           >
             {bet.carrier.name}
           </Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ mt: 0.25 }}>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ mt: 0.25 }}
+          >
             ИНН {bet.carrier.inn} · {formatFullDate(bet.created_at)}
           </Typography>
         </Box>
@@ -233,7 +237,8 @@ export const BetsPanel = ({ auctionUuid, hidden }: BetsPanelProps) => {
                         ИНН {bet.carrier.inn}
                       </Typography>
                       {bet.cancellation_reason && (
-                        <Typography variant="overline"
+                        <Typography
+                          variant="overline"
                           color="error"
                           sx={{ mt: 0.4 }}
                         >
