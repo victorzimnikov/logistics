@@ -19,6 +19,7 @@ pnpm dev        # http://localhost:5173
 ```bash
 pnpm test       # vitest в watch-режиме
 pnpm test:run   # прогон один раз
+pnpm format
 pnpm lint
 pnpm check      # lint + типы + тесты
 pnpm build
