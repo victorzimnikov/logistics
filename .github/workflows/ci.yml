@@ -1,0 +1,25 @@
+name: check
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node_version: "20"
+      - name: Install dependencies
+        uses: pnpm ci
+      - name: Run lint
+        uses: pnpm lint
+      - name: Run typecheck
+        uses: pnpm dts
+      - name: Run test
+        uses: pnpm test
